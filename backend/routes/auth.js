@@ -5,41 +5,39 @@ const jwt = require('jsonwebtoken');
 const authRouter = express.Router();
 
 authRouter.post("/api/sign-up", async (req, res) => {
+    try {
+        const { email, name, password } = req.body;
 
-    // Receive Data
-    const { email, name, password } = req.body;
+        if (!email || !name || !password) {
+            return res.status(400).json({
+                msg: "Please provide all required fields."
+            });
+        }
 
-    // Validation
-    if (!email || !name || !password) {
-        return res.status(400).json({
-            msg: "Please provide all required fields."
+        const exist = await User.findOne({ email });
+
+        if (exist) {
+            return res.status(400).json({
+                msg: "User already exists."
+            });
+        }
+
+        const hashPassword = await bcrypt.hash(password, 10);
+        const user = new User({
+            name,
+            email,
+            password: hashPassword
         });
-    }
 
-    // Check if user already exists
-    const exist = await User.findOne({ email });
+        await user.save();
 
-    if (exist) {
-        return res.status(400).json({
-            msg: "User already exists."
+        return res.status(201).json({
+            msg: "User created successfully",
+            user
         });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
     }
-
-    const hashPassword=await bcrypt.hash(password,10);
-    // Create user
-    const user = new User({
-        name,
-        email,
-        password:hashPassword
-    });
-
-    // Save to database
-    await user.save();
-
-    return res.status(201).json({
-        msg: "User created successfully",
-        user
-    });
 });
 
 

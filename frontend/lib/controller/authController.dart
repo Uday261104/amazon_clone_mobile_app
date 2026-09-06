@@ -4,46 +4,64 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Authcontroller {
-  Future<void> signUpUser({
+  Future<int?> signUpUser({
     required String email,
     required String name,
     required String password,
   }) async {
-    User user = User(
-      id: '',
-      email: email,
-      name: name,
-      password: password,
-      address: '',
-      type: 'user',
-    );
+    try {
+      User user = User(
+        id: '',
+        email: email,
+        name: name,
+        password: password,
+        address: '',
+        type: 'user',
+      );
 
-    final response = await http.post(
-      Uri.parse(ApiConstants.signUp),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(user.toDB()),
-    );
+      final response = await http.post(
+        Uri.parse(ApiConstants.signUp),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "email": user.email,
+          "name": user.name,
+          "password": user.password,
+        }),
+      );
 
-    print(response.body);
+      print(response.statusCode);
+      print(response.body);
+      return response.statusCode;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
-  Future<void> signInUser({
+  Future<int?> signInUser({
     required String email,
     required String password,
   }) async {
-    final response = await http.post(
-      Uri.parse(ApiConstants.signIn),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        "email": email,
-        "password": password,
-      }),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse(ApiConstants.signIn),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+        }),
+      );
 
-    print(response.body);
+      print(response.statusCode);
+      print(response.body);
+      return response.statusCode;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 }

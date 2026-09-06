@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../controller/authController.dart';
+import '../home/homeScreen.dart';
 
 class Authscreen extends StatefulWidget {
   static const String routeName = '/auth-screen';
@@ -21,6 +22,9 @@ class _AuthscreenState extends State<Authscreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  String email = '';
+  String password = '';
+
   bool isLoginEnabled = true;
 
   void _submitSignUp() async {
@@ -30,10 +34,33 @@ class _AuthscreenState extends State<Authscreen> {
       return;
     }
 
-    await authcontroller.signUpUser(
+    final statusCode = await authcontroller.signUpUser(
       email: emailController.text.trim(),
       name: nameController.text.trim(),
       password: passwordController.text,
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    if (statusCode == 201) {
+      setState(() {
+        isLoginEnabled = true;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Account created. Please sign in.'),
+        ),
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Could not create account. Please try again.'),
+      ),
     );
   }
 
@@ -44,9 +71,30 @@ class _AuthscreenState extends State<Authscreen> {
       return;
     }
 
-    await authcontroller.signInUser(
-      email: emailController.text.trim(),
-      password: passwordController.text,
+    _signInkey.currentState!.save();
+
+    final statusCode = await authcontroller.signInUser(
+      email: email,
+      password: password,
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    if (statusCode == 200) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        HomeScreen.routeName,
+        (route) => false,
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Sign in failed. Check your email and password.'),
+      ),
     );
   }
 
@@ -141,6 +189,9 @@ class _AuthscreenState extends State<Authscreen> {
                         TextFormField(
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
+                          onSaved: (value) {
+                            email = value!.trim();
+                          },
                           validator: (value) {
                             if (value == null ||
                                 value.trim().isEmpty) {
@@ -226,6 +277,9 @@ class _AuthscreenState extends State<Authscreen> {
                           obscureText: true,
                           keyboardType:
                               TextInputType.visiblePassword,
+                          onSaved: (value) {
+                            password = value!;
+                          },
                           validator: (value) {
                             if (value == null ||
                                 value.isEmpty) {
