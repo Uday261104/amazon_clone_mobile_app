@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class User {
   final String id;
   final String email;
@@ -17,7 +19,7 @@ class User {
 
   factory User.fromDB(Map<String, dynamic> data) {
     return User(
-      id: data['id'],
+      id: data['_id'],
       email: data['email'],
       name: data['name'],
       password: data['password'],
@@ -35,5 +37,9 @@ class User {
       'address': address,
       'type': type,
     };
+  }
+
+  factory User.fromJson(String source) {
+    return User.fromDB(jsonDecode(source));
   }
 }

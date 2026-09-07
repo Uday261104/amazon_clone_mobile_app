@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/view/auth/authScreen.dart';
-import 'package:frontend/view/home/homeScreen.dart';
+import 'package:frontend/view/homeScreen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
     case Authscreen.routeName:
       return MaterialPageRoute(builder: (_) => const Authscreen());
 
-    case HomeScreen.routeName:
-      return MaterialPageRoute(builder: (_) => const HomeScreen());
+    case Homescreen.routeName:
+      return MaterialPageRoute(builder: (_) => const Homescreen());
 
     default:
       return MaterialPageRoute(

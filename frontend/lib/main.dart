@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controller/provider_controller/user_provider.dart';
 import 'package:frontend/router.dart';
-import 'package:frontend/view/home/homeScreen.dart';
-
+import 'package:provider/provider.dart';
+import 'package:frontend/view/auth/authScreen.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      onGenerateRoute: (settings) => generateRoute(settings),
       debugShowCheckedModeBanner: false,
       title: 'Amazon Clone',
-      home: const HomeScreen(),
+      initialRoute: Authscreen.routeName,
+      onGenerateRoute: (settings) => generateRoute(settings),
     );
   }
 }
