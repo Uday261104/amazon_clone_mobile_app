@@ -1,9 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:frontend/controller/provider_controller/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../model/userModel.dart';
 import '../constant/api_contants.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Authcontroller {
   Future<int?> signUpUser({
@@ -60,9 +63,54 @@ class Authcontroller {
         final data = jsonDecode(response.body);
 
         userProvider.setUser(data);
+
+        final sharedPreferences = await SharedPreferences.getInstance();
+
+        await sharedPreferences.setString("token", data['token']);
       }
 
       return response.statusCode;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<String?> fetchUserData(UserProvider userProvider) async {
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+
+      final token = sharedPreferences.getString("token");
+
+      // No token → user is not logged in
+      if (token == null) {
+        return null;
+      }
+
+      // First validate the token
+      final tokenRes = await http.post(
+        Uri.parse(ApiConstants.validate),
+        headers: {'Content-Type': 'application/json', 'token': token},
+      );
+
+      final response = jsonDecode(tokenRes.body);
+
+      // Token is valid
+      if (response == true) {
+        final http.Response userRes = await http.get(
+          Uri.parse(ApiConstants.user),
+          headers: {'Content-Type': 'application/json', 'token': token},
+        );
+
+        if (userRes.statusCode == 200) {
+          final userData = jsonDecode(userRes.body);
+
+          userProvider.setUser(userData);
+        }
+      }
+
+      // Token is invalid
+      return null;
     } catch (e) {
       print(e);
       return null;

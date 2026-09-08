@@ -17,9 +17,7 @@ class Homescreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Home',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -33,11 +31,7 @@ class Homescreen extends StatelessWidget {
               const CircleAvatar(
                 radius: 45,
                 backgroundColor: Colors.black,
-                child: Icon(
-                  Icons.person,
-                  size: 50,
-                  color: Colors.white,
-                ),
+                child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
 
               const SizedBox(height: 15),
@@ -54,10 +48,7 @@ class Homescreen extends StatelessWidget {
 
               Text(
                 user.email,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
               ),
 
               const SizedBox(height: 25),
@@ -131,11 +122,7 @@ class Homescreen extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          size: 24,
-          color: Colors.black87,
-        ),
+        Icon(icon, size: 24, color: Colors.black87),
 
         const SizedBox(width: 15),
 
@@ -145,10 +132,7 @@ class Homescreen extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
               ),
 
               const SizedBox(height: 4),
