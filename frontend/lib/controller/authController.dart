@@ -106,6 +106,7 @@ class Authcontroller {
           final userData = jsonDecode(userRes.body);
 
           userProvider.setUser(userData);
+          return token;
         }
       }
 

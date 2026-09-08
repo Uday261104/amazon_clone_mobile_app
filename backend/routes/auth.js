@@ -79,7 +79,7 @@ authRouter.post("/api/validate-token", async (req, res) => {
       return res.json(false);
     }
 
-    const isValid = jwt.verify(token, "secretKey");
+    const isValid = jwt.verify(token, "secretkey");
 
     if (!isValid) {
       return res.json(false);
@@ -99,9 +99,9 @@ authRouter.post("/api/validate-token", async (req, res) => {
 });
 
 
-authRouter.get("/",auth,async(req,res)=>{
+authRouter.get("/api/",auth,async(req,res)=>{
 
-    const user=await User.findOne(req.user);
+    const user = await User.findById(req.user.id);
     res.json({...user._doc,token:req.token})
 
 })

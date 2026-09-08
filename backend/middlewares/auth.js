@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
     }
 
     try {
-        const verify = jwt.verify(token, "sercretKey");
+        const verify = jwt.verify(token, "secretkey");
 
         req.user = verify;
         req.token = token;

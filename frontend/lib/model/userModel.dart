@@ -19,12 +19,12 @@ class User {
 
   factory User.fromDB(Map<String, dynamic> data) {
     return User(
-      id: data['_id'],
-      email: data['email'],
-      name: data['name'],
-      password: data['password'],
-      address: data['address'],
-      type: data['type'],
+      id: data['_id'] ?? '',
+      email: data['email'] ?? '',
+      name: data['name'] ?? '',
+      password: data['password'] ?? '',
+      address: data['address'] ?? '',
+      type: data['type'] ?? '',
     );
   }
 

@@ -49,14 +49,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Amazon Clone',
-      home: isLoggedIn ? const Homescreen() : const Authscreen(),
+      home: isLoading
+          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+          : (isLoggedIn ? const Homescreen() : const Authscreen()),
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }

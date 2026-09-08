@@ -8,6 +8,15 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(`→ ${req.method} ${req.url}`);
+  res.on("finish", () => {
+    console.log(`← ${res.statusCode} ${req.method} ${req.url}`);
+    console.log(res);
+  });
+  next();
+});
+
 // Import auth router
 const auth = require("./routes/auth");
 
