@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:frontend/controller/authController.dart';
 import 'package:frontend/controller/provider_controller/user_provider.dart';
 
 import 'package:frontend/router.dart';
-import 'package:provider/provider.dart';
 import 'package:frontend/view/auth/authScreen.dart';
-import 'package:frontend/view/homeScreen.dart';
+import 'package:frontend/utils/bottom_nav_bar.dart';
+import 'package:frontend/utils/seller_bottom_nav_bar.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -37,9 +40,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _fetchUser() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userProvider =
+        Provider.of<UserProvider>(context, listen: false);
 
     final token = await authController.fetchUserData(userProvider);
+
+    if (!mounted) return;
 
     setState(() {
       isLoggedIn = token != null;
@@ -49,12 +55,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Amazon Clone',
+
       home: isLoading
-          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : (isLoggedIn ? const Homescreen() : const Authscreen()),
+          ? const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : isLoggedIn
+              ? user.type == 'user'
+                  ? const BottomNavBar()
+                  : const SellerBottomNavBar()
+              : const Authscreen(),
+
       onGenerateRoute: (settings) => generateRoute(settings),
     );
   }
