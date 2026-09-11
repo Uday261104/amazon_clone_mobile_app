@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:frontend/controller/authController.dart';
+
+import 'package:frontend/view/auth/authScreen.dart';
+
+import 'package:frontend/seller_view/addProduct.dart';
+
 class SellerOrderScreen extends StatelessWidget {
   const SellerOrderScreen({super.key});
 
@@ -8,9 +14,34 @@ class SellerOrderScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Orders'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await Authcontroller().logOutUser();
+
+              if (!context.mounted) return;
+
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Authscreen.routeName,
+                (route) => false,
+              ); 
+            },
+          ),
+        ],
       ),
-      body: const Center(
-        child: Text('Seller Order Screen'),
+
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              AddProductScreen.routeName,
+            );
+          },
+          child: const Text('Add Product'),
+        ),
       ),
     );
   }

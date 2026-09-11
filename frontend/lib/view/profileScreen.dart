@@ -4,9 +4,21 @@ import 'package:frontend/controller/provider_controller/user_provider.dart';
 import 'package:frontend/utils/account_button.dart';
 import 'package:frontend/utils/singleProduct.dart';
 import 'package:provider/provider.dart';
+import 'package:frontend/controller/authController.dart';
+import 'package:frontend/view/auth/authScreen.dart';
 
 class Profilescreen extends StatelessWidget {
   const Profilescreen({super.key});
+
+  void logOut(BuildContext context) async {
+    await Authcontroller().logOutUser();
+    if (!context.mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Authscreen.routeName,
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +97,7 @@ class Profilescreen extends StatelessWidget {
                   ),
                   ProfileButton(
                     text: "Logout",
-                    onTap: () {},
+                    onTap: () => logOut(context),
                   ),
                 ],
               ),

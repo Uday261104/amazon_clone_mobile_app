@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view/homeScreen.dart';
+import 'package:frontend/utils/bottom_nav_bar.dart';
+import 'package:frontend/utils/seller_bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/authController.dart';
@@ -95,11 +96,21 @@ class _AuthscreenState extends State<Authscreen> {
     }
 
     if (statusCode == 200) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Homescreen.routeName,
-        (route) => false,
-      );
+      final userType = userProvider.user.type;
+
+      if (userType == 'seller') {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          SellerBottomNavBar.routeName,
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          BottomNavBar.routeName,
+          (route) => false,
+        );
+      }
 
       return;
     }

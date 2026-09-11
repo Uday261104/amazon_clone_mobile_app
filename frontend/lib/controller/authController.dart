@@ -116,4 +116,13 @@ class Authcontroller {
       return null;
     }
   }
+
+  Future<void> logOutUser() async {
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.remove("token");
+    } catch (e) {
+      print(e);
+    }
+  }
 }
