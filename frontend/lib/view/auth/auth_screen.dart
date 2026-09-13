@@ -3,7 +3,7 @@ import 'package:frontend/utils/bottom_nav_bar.dart';
 import 'package:frontend/utils/seller_bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/authController.dart';
+import '../../controller/auth_controller.dart';
 import '../../controller/provider_controller/user_provider.dart';
 
 class Authscreen extends StatefulWidget {

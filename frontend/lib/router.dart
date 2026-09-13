@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/seller_view/addProduct.dart';
-import 'package:frontend/view/auth/authScreen.dart';
+import 'package:frontend/seller_view/add_product.dart';
+import 'package:frontend/view/auth/auth_screen.dart';
 import 'package:frontend/utils/bottom_nav_bar.dart';
 import 'package:frontend/utils/seller_bottom_nav_bar.dart';
 

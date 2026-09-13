@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/controller/provider_controller/user_provider.dart';
 import 'package:frontend/utils/account_button.dart';
-import 'package:frontend/utils/singleProduct.dart';
+import 'package:frontend/utils/single_product.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/controller/authController.dart';
-import 'package:frontend/view/auth/authScreen.dart';
+import 'package:frontend/controller/auth_controller.dart';
+import 'package:frontend/view/auth/auth_screen.dart';
 
 class Profilescreen extends StatelessWidget {
   const Profilescreen({super.key});

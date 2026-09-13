@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import 'package:frontend/controller/provider_controller/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../model/userModel.dart';
+import '../model/user_model.dart';
 import '../constant/api_contants.dart';
 
 class Authcontroller {
@@ -33,12 +34,12 @@ class Authcontroller {
         }),
       );
 
-      print(response.statusCode);
-      print(response.body);
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.body);
 
       return response.statusCode;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return null;
     }
   }
@@ -55,8 +56,8 @@ class Authcontroller {
         body: jsonEncode({"email": email, "password": password}),
       );
 
-      print(response.statusCode);
-      print(response.body);
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.body);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -70,7 +71,7 @@ class Authcontroller {
 
       return response.statusCode;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return null;
     }
   }
@@ -112,7 +113,7 @@ class Authcontroller {
       // Token is invalid
       return null;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return null;
     }
   }
@@ -122,7 +123,7 @@ class Authcontroller {
       final sharedPreferences = await SharedPreferences.getInstance();
       await sharedPreferences.remove("token");
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 }

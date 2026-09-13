@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:frontend/controller/authController.dart';
+import 'package:frontend/controller/auth_controller.dart';
 
-import 'package:frontend/view/auth/authScreen.dart';
+import 'package:frontend/view/auth/auth_screen.dart';
 
-import 'package:frontend/seller_view/addProduct.dart';
+import 'package:frontend/seller_view/add_product.dart';
 
 class SellerOrderScreen extends StatelessWidget {
   const SellerOrderScreen({super.key});

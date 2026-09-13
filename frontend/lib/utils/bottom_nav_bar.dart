@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/view/homeScreen.dart';
-import 'package:frontend/view/profileScreen.dart';
+import 'package:frontend/view/home_screen.dart';
+import 'package:frontend/view/profile_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   static const String routeName = '/';
@@ -31,7 +31,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               borderRadius: BorderRadius.circular(30),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

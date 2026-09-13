@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:frontend/controller/authController.dart';
+import 'package:frontend/controller/auth_controller.dart';
 import 'package:frontend/controller/provider_controller/user_provider.dart';
 
 import 'package:frontend/router.dart';
-import 'package:frontend/view/auth/authScreen.dart';
+import 'package:frontend/view/auth/auth_screen.dart';
 import 'package:frontend/utils/bottom_nav_bar.dart';
 import 'package:frontend/utils/seller_bottom_nav_bar.dart';
 
